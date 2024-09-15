@@ -1,7 +1,7 @@
 import numpy as np
 import matplotlib.pyplot as plt
 
-def mandelbrot(c, max_iter):
+def mandelbrot(c, max_iter) -> int:
     a = 0
     for n in range(max_iter):
         if abs(a) > 2:
@@ -10,7 +10,7 @@ def mandelbrot(c, max_iter):
     return max_iter
 
 
-def mandelbrot_set(xmin, xmax, ymin, ymax, width, max_iter):
+def mandelbrot_set(xmin, xmax, ymin, ymax, width, max_iter) -> np.ndarray:
     x = np.linspace(xmin, xmax, width)
     y = np.linspace(ymin, ymax, width)
     mset = np.zeros((width, width))
