@@ -2,6 +2,15 @@ import numpy as np
 import matplotlib.pyplot as plt
 
 def mandelbrot(c, max_iter) -> int:
+    """_summary_
+
+    Args:
+        c (_type_): _description_
+        max_iter (_type_): _description_
+
+    Returns:
+        int: _description_
+    """
     a = 0
     for n in range(max_iter):
         if abs(a) > 2:
@@ -11,6 +20,19 @@ def mandelbrot(c, max_iter) -> int:
 
 
 def mandelbrot_set(xmin, xmax, ymin, ymax, width, max_iter) -> np.ndarray:
+    """_summary_
+
+    Args:
+        xmin (_type_): _description_
+        xmax (_type_): _description_
+        ymin (_type_): _description_
+        ymax (_type_): _description_
+        width (_type_): _description_
+        max_iter (_type_): _description_
+
+    Returns:
+        np.ndarray: _description_
+    """    
     x = np.linspace(xmin, xmax, width)
     y = np.linspace(ymin, ymax, width)
     mset = np.zeros((width, width))
@@ -27,6 +49,11 @@ xmin, xmax, ymin, ymax = -1.5, 0.5, -1, 1
 max_iter = 100
 
 def draw_mandel(width: int):
+    """_summary_
+
+    Args:
+        width (int): _description_
+    """    
     xmin, xmax, ymin, ymax = -1.5, 0.5, -1, 1
     max_iter = 100
 
