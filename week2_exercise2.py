@@ -43,10 +43,7 @@ def mandelbrot_set(xmin, xmax, ymin, ymax, width, max_iter) -> np.ndarray:
             mset[i, j] = mandelbrot(c, max_iter)
     
     return mset
-    
-
-xmin, xmax, ymin, ymax = -1.5, 0.5, -1, 1
-max_iter = 100
+   
 
 def draw_mandel(width: int):
     """_summary_
