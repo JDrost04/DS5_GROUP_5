@@ -68,8 +68,8 @@ def mandelbrot_set(xmin, xmax, ymin, ymax, width, max_iter):
             c = complex(x[j], y[i])
             mset[i, j] = mandelbrot(c, max_iter)
     
-    return mset()
-
+    return mset
+    
 
 xmin, xmax, ymin, ymax = -1.5, 0.5, -1, 1
 width = 200
