@@ -1,7 +1,7 @@
 """ The Mandelbrot set is a set of complex numbers defined by the sequence 
 a(n) = a(n-1)**2 + c
 a(0) = 0
- with thge complex number 
+ with the complex number 
 c = x + y*i
 
 The number c is part of the Mandelbrot set when a(n) does not diverge to infinity. 
@@ -33,3 +33,53 @@ Things to take into account:
     
 In the end, you should have a draw_mandel(200) function call in your code.
 """
+
+"""Parameters:
+    x range = [-1.5, 0.5] 
+    y range = [-1, 1]
+    
+    a(n) = a(n-1)**2 + c
+    a(0) = 0
+    with the complex number 
+    c = x + y*i
+    
+    In python, c = complex(x,y) is often used.
+    """
+    
+import numpy as np
+import matplotlib.pyplot as plt
+
+def mandelbrot(c, max_iter):
+    a = 0
+    for n in range(max_iter):
+        if abs(a) > 2:
+            return n
+        a = a**2 + c
+    return max_iter
+
+
+def mandelbrot_set(xmin, xmax, ymin, ymax, width, max_iter):
+    x = np.linspace(xmin, xmax, width)
+    y = np.linspace(ymin, ymax, width)
+    mset = np.zeros((width, width))
+    
+    for i in range(width):
+        for j in range(width):
+            c = complex(x[j], y[i])
+            mset[i, j] = mandelbrot(c, max_iter)
+    
+    return mset()
+
+
+xmin, xmax, ymin, ymax = -1.5, 0.5, -1, 1
+width = 200
+max_iter = 100
+
+mandelbrot_image = mandelbrot_set(xmin, xmax, ymin, ymax, width, max_iter)
+
+plt.imshow(mandelbrot_image, extent = [xmin, xmax, ymin, ymax], cmap='hot')
+plt.colorbar()
+plt.title('Mandelbrot Visualization')
+plt.xlabel('Real(c)')
+plt.ylabel('Imaginary(c)')
+plt.show()
