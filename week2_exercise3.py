@@ -32,3 +32,5 @@ print(nx.pagerank(graph_generator(N,M,n0)))'''
 
 
 #opdracht 3.2
+df = pd.read_csv('ds5_assignment_group5/squirrel_edges.csv')
+print(df)
