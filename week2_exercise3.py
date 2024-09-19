@@ -4,7 +4,7 @@ import math as m
 import networkx as nx
 import matplotlib.pyplot as plt
 import scipy.stats as sp
-
+'''
 N = 400
 M = 4
 n0 = 5
@@ -27,4 +27,8 @@ def graph_generator(N,M,n0):
 nx.draw(graph_generator(N,M,n0))
 plt.show()
 
-print(nx.pagerank(graph_generator(N,M,n0)))
+print(nx.pagerank(graph_generator(N,M,n0)))'''
+
+
+
+#opdracht 3.2
