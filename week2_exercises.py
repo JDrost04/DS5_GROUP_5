@@ -181,3 +181,5 @@ draw_mandel(200)
 
 
 # EXERCISE 3
+
+import week2_exercise3
