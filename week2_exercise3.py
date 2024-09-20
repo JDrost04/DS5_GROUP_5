@@ -4,7 +4,7 @@ import math as m
 import networkx as nx
 import matplotlib.pyplot as plt
 import scipy.stats as sp
-'''
+
 N = 400
 M = 4
 n0 = 5
@@ -27,16 +27,21 @@ def graph_generator(N,M,n0):
 nx.draw(graph_generator(N,M,n0))
 plt.show()
 
-print(nx.pagerank(graph_generator(N,M,n0)))'''
+para = nx.pagerank(graph_generator(N,M,n0))
+df3 = pd.DataFrame.from_dict(para, orient='index', columns=['Pagerank'])
+print(df3)
+
 
 
 
 #opdracht 3.2
 df = pd.read_csv('ds5_assignment_group5/squirrel_edges.csv')
 df.columns = ['from', 'to']
-#print(df.loc[:,'from'])
 G = nx.DiGraph()
 G.add_nodes_from(df.loc[:,'from'])
 for i in range(len(df)):
     G.add_edge(df.loc[i,'from'],df.loc[i,'to'])
 
+pagran = nx.pagerank(G)
+df2 = pd.DataFrame.from_dict(pagran, orient='index', columns=['Pagerank'])
+print(df2)
