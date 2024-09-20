@@ -37,6 +37,15 @@ print(df3)
 #opdracht 3.2
 file_path = input("Please enter the file path to the .csv file:")
 def read_and_graph(filepath):
+    ''' This function reads a csv file containing unidirectional edges. It returns a networkx DiGraph
+    with these edges.
+    
+    Args:
+        filepath (str): The path to the csv file.
+    
+    Returns:
+        G: A graph with the edges from the csv file.
+    '''
     df = pd.read_csv(filepath)
     df.columns = ['from', 'to']
     G = nx.DiGraph()
@@ -46,6 +55,14 @@ def read_and_graph(filepath):
     return G
 
 def pagerank_from_csv(filepath):
+    ''' This function reads a csv file containing unidirectional edges and pageranks the nodes.
+    
+    Args:
+        filepath (str): The path to the csv file.
+        
+    Returns:
+        df2: Pandas DataFrame containing nodes and their respective pageranks.
+    '''
     pagran = nx.pagerank(read_and_graph(filepath))
     df2 = pd.DataFrame.from_dict(pagran, orient='index', columns=['Pagerank'])
     return df2
