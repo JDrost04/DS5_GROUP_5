@@ -35,13 +35,19 @@ print(df3)
 
 
 #opdracht 3.2
-df = pd.read_csv('squirrel_edges.csv')
-df.columns = ['from', 'to']
-G = nx.DiGraph()
-G.add_nodes_from(df.loc[:,'from'])
-for i in range(len(df)):
-    G.add_edge(df.loc[i,'from'],df.loc[i,'to'])
+file_path = input("Please enter the file path to the .csv file:")
+def read_and_graph(filepath):
+    df = pd.read_csv(filepath)
+    df.columns = ['from', 'to']
+    G = nx.DiGraph()
+    G.add_nodes_from(df.loc[:,'from'])
+    for i in range(len(df)):
+       G.add_edge(df.loc[i,'from'],df.loc[i,'to'])
+    return G
 
-pagran = nx.pagerank(G)
-df2 = pd.DataFrame.from_dict(pagran, orient='index', columns=['Pagerank'])
-print(df2)
+def pagerank_from_csv(filepath):
+    pagran = nx.pagerank(read_and_graph(filepath))
+    df2 = pd.DataFrame.from_dict(pagran, orient='index', columns=['Pagerank'])
+    return df2
+
+print(pagerank_from_csv(file_path))
