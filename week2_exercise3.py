@@ -10,7 +10,20 @@ N = 400
 M = 4
 n0 = 5
 
-def create_random_graph(N,M,n0):
+def create_random_graph(N: int,M: int,n0: int):
+    ''' This function creates a graph of connections between points dependent on how many connections a point already has. (the pagerank of each point).
+    
+    Args:
+        N (Type = int): Amount of total points created in the graph.
+        M (Type = int): Amount of connections a point starts with. (For example M=4 will create a point with 4 connections to earlier points)
+        n0 (Type = int): Amount of points the graph starts with. (For example n0=5 will start the graph with a center point connected to 5 other points)
+
+    Returns:
+        NW: The graph with connections based on the pagerank of each point.   
+    
+    
+    
+    '''
     NW = nx.star_graph(n0)
     node_amount = n0+1
     #print('yep de werkt nog')
