@@ -33,4 +33,10 @@ print(nx.pagerank(graph_generator(N,M,n0)))'''
 
 #opdracht 3.2
 df = pd.read_csv('ds5_assignment_group5/squirrel_edges.csv')
-print(df)
+df.columns = ['from', 'to']
+#print(df.loc[:,'from'])
+G = nx.DiGraph()
+G.add_nodes_from(df.loc[:,'from'])
+for i in range(len(df)):
+    G.add_edge(df.loc[i,'from'],df.loc[i,'to'])
+
