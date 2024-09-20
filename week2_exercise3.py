@@ -33,19 +33,17 @@ def create_random_graph(N,M,n0):
             NW.add_edge(i,link_points[j])
         node_amount += 1
         print(f'je bent nu bij node {node_amount}')
-    nx.draw(NW)
-    plt.show()
     return NW
 
 
 
 
+NW = create_random_graph(N,M,n0)
 
-
-nx.draw(create_random_graph(N,M,n0))
+nx.draw(NW)
 plt.show()
 
-para = nx.pagerank(create_random_graph(N,M,n0))
+para = nx.pagerank(NW)
 df3 = pd.DataFrame.from_dict(para, orient='index', columns=['Pagerank'])
 print(df3)
 
