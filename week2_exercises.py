@@ -116,14 +116,14 @@ import numpy as np
 import matplotlib.pyplot as plt
 
 def mandelbrot(c, max_iter) -> int:
-    """_summary_
-
+    """Generates the Mandelbrot set value for a given complex number c.
+    
     Args:
-        c (_type_): _description_
-        max_iter (_type_): _description_
+        c (complex): A complex number representing a point in the complex plane.
+        max_iter (int): The maximum number of iterations to check if the point escapes.
 
     Returns:
-        int: _description_
+        int: The number of iterations before the point escapes, or max_iter if it doesn't escape.
     """
     a = 0
     for n in range(max_iter):
@@ -134,37 +134,40 @@ def mandelbrot(c, max_iter) -> int:
 
 
 def mandelbrot_set(xmin, xmax, ymin, ymax, width, max_iter) -> np.ndarray:
-    """_summary_
-
+     """Generates the Mandelbrot set for a given range of the complex plane.
+    
     Args:
-        xmin (_type_): _description_
-        xmax (_type_): _description_
-        ymin (_type_): _description_
-        ymax (_type_): _description_
-        width (_type_): _description_
-        max_iter (_type_): _description_
+        xmin (float): Minimum real part of the complex plane.
+        xmax (float): Maximum real part of the complex plane.
+        ymin (float): Minimum imaginary part of the complex plane.
+        ymax (float): Maximum imaginary part of the complex plane.
+        width (int): Resolution of the grid (both in real and imaginary axes).
+        max_iter (int): Maximum iterations for Mandelbrot set generation.
 
     Returns:
-        np.ndarray: _description_
+        np.ndarray: A 2D array representing the Mandelbrot set, where each element
+                    represents the number of iterations for each complex point.
     """    
-    x = np.linspace(xmin, xmax, width)
-    y = np.linspace(ymin, ymax, width)
-    mset = np.zeros((width, width))
     
-    for i in range(width):
-        for j in range(width):
+     x = np.linspace(xmin, xmax, width)
+     y = np.linspace(ymin, ymax, width)
+     mset = np.zeros((width, width))
+    
+     for i in range(width):
+         for j in range(width):
             c = complex(x[j], y[i])
             mset[i, j] = mandelbrot(c, max_iter)
     
-    return mset
+     return mset
    
 
 def draw_mandel(width: int):
-    """_summary_
+    """Draws and visualizes the Mandelbrot set with a specified resolution.
 
     Args:
-        width (int): _description_
-    """    
+        width (int): The resolution of the generated Mandelbrot set image.
+    """
+
     xmin, xmax, ymin, ymax = -1.5, 0.5, -1, 1
     max_iter = 100
 
@@ -181,6 +184,85 @@ draw_mandel(200)
 
 
 # EXERCISE 3
+# 3.1
+import pandas as pd
+import math as m
+import networkx as nx
+import scipy.stats as sp
 
-import week2_exercise3
 
+N = 400
+M = 4
+n0 = 5
+
+def create_random_graph(N: int,M: int,n0: int):
+    ''' This function creates a graph of connections between points dependent on how many connections a point already has. (the pagerank of each point).
+    
+    Args:
+        N (Type = int): Amount of total points created in the graph.
+        M (Type = int): Amount of connections a point starts with. (For example M=4 will create a point with 4 connections to earlier points)
+        n0 (Type = int): Amount of points the graph starts with. (For example n0=5 will start the graph with a center point connected to 5 other points)
+
+    Returns:
+        NW: The graph with connections based on the pagerank of each point.   
+    
+    
+    
+    '''
+    NW = nx.star_graph(n0)
+    node_amount = n0+1
+    #print('yep de werkt nog')
+    for i in range(n0+1,N):
+        pagerank_chances = nx.pagerank(NW)
+        NW.add_node(i)
+        link_points = np.random.choice(node_amount,M,replace=False,p=list(pagerank_chances.values()))
+        for j in range(M):
+            NW.add_edge(i,link_points[j])
+        node_amount += 1
+        #print(f'je bent nu bij node {node_amount}')
+    return NW
+
+NW = create_random_graph(N,M,n0)
+
+nx.draw(NW)
+plt.show()
+
+para = nx.pagerank(NW)
+df3 = pd.DataFrame.from_dict(para, orient='index', columns=['Pagerank'])
+print(df3)
+
+
+#opdracht 3.2
+file_path = input("Please enter the file path to the .csv file:")
+def read_and_graph(filepath):
+    ''' This function reads a csv file containing unidirectional edges. It returns a networkx DiGraph
+    with these edges.
+    
+    Args:
+        filepath (str): The path to the csv file.
+    
+    Returns:
+        G: A graph with the edges from the csv file.
+    '''
+    df = pd.read_csv(filepath)
+    df.columns = ['from', 'to']
+    G = nx.DiGraph()
+    G.add_nodes_from(df.loc[:,'from'])
+    for i in range(len(df)):
+       G.add_edge(df.loc[i,'from'],df.loc[i,'to'])
+    return G
+
+def pagerank_from_csv(filepath):
+    ''' This function reads a csv file containing unidirectional edges and pageranks the nodes.
+    
+    Args:
+        filepath (str): The path to the csv file.
+        
+    Returns:
+        df2: Pandas DataFrame containing nodes and their respective pageranks.
+    '''
+    pagran = nx.pagerank(read_and_graph(filepath))
+    df2 = pd.DataFrame.from_dict(pagran, orient='index', columns=['Pagerank'])
+    return df2
+
+print(pagerank_from_csv(file_path))
