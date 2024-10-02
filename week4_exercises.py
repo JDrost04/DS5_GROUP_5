@@ -110,7 +110,8 @@ generate_sales_report('detailedRetail.xlsx', 'reportRetail.xlsx')
 # EXERCISE 4
 # 4.1
 import langdetect as ld
-
+"""py -m pip install pandas langdetect openpyxl
+"""
 # Load the Excel file
 tweets_df = pd.read_excel('tweets.xlsx')
 
