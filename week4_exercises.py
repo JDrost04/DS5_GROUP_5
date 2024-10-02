@@ -109,4 +109,36 @@ generate_sales_report('detailedRetail.xlsx', 'reportRetail.xlsx')
 
 # EXERCISE 4
 # 4.1
+import langdetect as ld
+
+# Load the Excel file
+tweets_df = pd.read_excel('tweets.xlsx')
+
+# Create a new column 'Language' to store the detected language
+def detect_language(tweet):
+    """Detects language of tweets from excel file.
+
+    Args:
+        tweet (str): The text of the tweet for which the language will be detected 
+    """    
+    try:
+        # Ensure that tweet is a string
+        if isinstance(tweet, str):
+            # Detect the language of the tweet
+            return ld.detect(tweet)
+        else:
+            return 'Unknown'
+    except ld.LangDetectException:
+        # Handle exception if language detection fails
+        return 'Unknown'
+
+# Apply the language detection to the 'Tweet' column
+tweets_df['Language'] = tweets_df['Tweet'].apply(detect_language)
+
+# Save the updated DataFrame to a new Excel file
+tweets_df.to_excel('tweets_with_language.xlsx', index=False)
+
+print(tweets_df.head(10))
+
+
 # 4.2
