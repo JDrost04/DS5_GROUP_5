@@ -30,7 +30,7 @@ def hotel_month_filler(row: int):
                 # there is a week where both months fall so there it used the day.
 
 def hotel_meal_fixer(row: int):
-        '''
+    '''
     This function fixes layout errors in the meal column
     
     Args:
@@ -43,7 +43,7 @@ def hotel_meal_fixer(row: int):
     hotel_data['meal'].iloc[row] = string_fixer[-2:]
 
 def hotel_night_stay_fixer(row: int):
-        '''
+    '''
     this function turns the numbers in the nights stay columns into whole numbers
     
     Args:
@@ -57,7 +57,7 @@ def hotel_night_stay_fixer(row: int):
         # chose to round down to have the data be based on full nights.
 
 def hotel_guest_fixer(row: int):
-            '''
+    '''
     This function checks if there are numbers that have more than 1 digit.
     
     Args:
