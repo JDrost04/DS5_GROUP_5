@@ -307,3 +307,64 @@ print(tweets_df.head(10))
 
 
 # 4.2
+from textblob import TextBlob
+# py -m pip install pandas textblob
+# als dit niet werk py -m weghalen
+import nltk
+nltk.download('vader_lexicon')
+from nltk.sentiment import SentimentIntensityAnalyzer
+# nltk zou als het goed is al gedownload zijn. anders die van textblob pakken en vervangen met nltk.
+def analyze_sentiment_english(tweet: str):
+    '''
+    Checks the sentiment of a string and returns if the string can be percieved as positive or negative
+
+    Args:
+        tweet (str): The string that gets checked for polarity
+    Returns:
+        A rating on the polarity of the string. If it's a positive message, a negative messsage, or a message that is neutral.
+    
+    '''
+    blob = TextBlob(tweet)
+    # turns the input string into a textblob so the textblob commands can be used on it
+    sentiment = blob.sentiment.polarity
+    # checks the blob for words that can be percieved positive or negative and returns a number based on those words
+    if sentiment > 0:
+        tweet_sentiment = 'positive'
+    elif sentiment < 0:
+        tweet_sentiment = 'negative'
+    else:
+        tweet_sentiment = 'neutral'
+    
+    print(f'the tweet {tweet} is {tweet_sentiment}')
+
+analyze_sentiment_english('awesome blob tester')
+analyze_sentiment_english('awful blob tester')
+analyze_sentiment_english('blob tester')
+
+def analyze_sentiment_other(tweet: str):
+    '''
+    Checks the sentiment of a string and returns if a tweet can be percieved as positive or negative
+
+    Args:
+        tweet (str): The string that gets checked for polarity
+
+    Returns: 
+        A rating on the polarity of the string. If it's a positive message, a negative messsage, or a message that is neutral.
+    
+    '''
+    analyzer = SentimentIntensityAnalyzer()
+    # turns the sentiment intensity analyzer into an object so commands can be used on it
+    sentiment = analyzer.polarity_scores(tweet)
+    # calculates the polarity scores of the input
+    if sentiment['compound'] >= 0.05:
+        tweet_sentiment = 'positive'
+    elif sentiment['compound'] <= -0.05:
+        tweet_sentiment = 'negative'
+    else:
+        tweet_sentiment = 'neutral'
+    print(f'the tweet {tweet} is {tweet_sentiment}') 
+
+    
+analyze_sentiment_other('awesome nltk tester')
+analyze_sentiment_other('awful blob tester')
+analyze_sentiment_other('nltk tester')
