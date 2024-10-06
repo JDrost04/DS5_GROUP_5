@@ -368,3 +368,31 @@ def analyze_sentiment_other(tweet: str):
 analyze_sentiment_other('awesome nltk tester')
 analyze_sentiment_other('awful blob tester')
 analyze_sentiment_other('nltk tester')
+
+# Function to apply the correct sentiment analysis based on the language of the tweet
+def analyze_sentiment(tweet, language):
+    """Applies language-specific sentiment analysis to the tweet.
+
+    Args:
+        tweet (str): The tweet text to analyze.
+        language (str): The language code of the tweet (e.g., 'en' for English).
+
+    Returns:
+        str: The sentiment of the tweet: 'positive', 'negative', or 'neutral'.
+    """
+    if pd.isna(tweet) or not isinstance(tweet, str):  # Check if the tweet is NaN or not a string
+        return 'Unknown'  # Return 'Unknown' or handle it as needed
+
+    if language == 'en':  # English tweets
+        return analyze_sentiment_english(tweet)
+    else:  # Other language tweets
+        return analyze_sentiment_other(tweet)
+
+# Apply sentiment analysis to the DataFrame
+tweets_df['Sentiment'] = tweets_df.apply(lambda row: analyze_sentiment(row['Tweet'], row['Language']), axis=1)
+
+# Save the updated DataFrame to a new Excel file
+tweets_df.to_excel('tweets_with_language_and_sentiment.xlsx', index=False)
+
+# Display the first 10 rows to verify results
+print(tweets_df.head(10))
