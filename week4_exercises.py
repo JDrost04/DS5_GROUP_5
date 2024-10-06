@@ -335,11 +335,11 @@ def analyze_sentiment_english(tweet: str):
     else:
         tweet_sentiment = 'neutral'
     
-    print(f'the tweet {tweet} is {tweet_sentiment}')
+    #print(f'the tweet {tweet} is {tweet_sentiment}')
 
-analyze_sentiment_english('awesome blob tester')
-analyze_sentiment_english('awful blob tester')
-analyze_sentiment_english('blob tester')
+#analyze_sentiment_english('awesome blob tester')
+#analyze_sentiment_english('awful blob tester')
+#analyze_sentiment_english('blob tester')
 
 def analyze_sentiment_other(tweet: str):
     '''
@@ -362,12 +362,12 @@ def analyze_sentiment_other(tweet: str):
         tweet_sentiment = 'negative'
     else:
         tweet_sentiment = 'neutral'
-    print(f'the tweet {tweet} is {tweet_sentiment}') 
+    #print(f'the tweet {tweet} is {tweet_sentiment}') 
 
     
-analyze_sentiment_other('awesome nltk tester')
-analyze_sentiment_other('awful blob tester')
-analyze_sentiment_other('nltk tester')
+#analyze_sentiment_other('awesome nltk tester')
+#analyze_sentiment_other('awful blob tester')
+#analyze_sentiment_other('nltk tester')
 
 # Function to apply the correct sentiment analysis based on the language of the tweet
 def analyze_sentiment(tweet, language):
