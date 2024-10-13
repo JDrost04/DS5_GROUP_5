@@ -54,10 +54,34 @@ plt.title('Polynomial Regression Model (Degree 2)')
 plt.show()
 
 # Evaluate R_squared and MSE
-R_squared = results.rsquared
-MSE = mean_squared_error(training_data['y'], predicted_training_y) 
-print(R_squared, MSE)
+train_R_squared = results.rsquared
+print('Train R^2 = ',train_R_squared)
 # R_squared = 0.9378508186540011
+
+# Prepare the test data 
+test_x = test_data['x']
+test_x_sq = pd.DataFrame(test_data['x']**2)
+
+# Create polynomial features for the test set
+test_x_poly = pd.concat([test_x, test_x_sq], axis=1)
+
+# Predict the test set outcomes
+X_test = sm.add_constant(test_x_poly)  # Add the constant (intercept term)
+predicted_test_y = results.predict(X_test)
+
+# Evaluate the model on the test set 
+test_R_squared = 1 - sum((test_data['y'] - predicted_test_y)**2) / sum((test_data['y'] - np.mean(test_data['y']))**2)
+
+print("Test R^2 = ", test_R_squared)
+
+# Plot the test set and the predicted values
+plt.scatter(test_data['x'], test_data['y'], label="Actual Test Data")
+plt.scatter(test_data['x'], predicted_test_y, color='red', label="Predicted Test Data")
+plt.xlabel('x')
+plt.ylabel('y')
+plt.title('Test Data vs. Predicted Data (Polynomial Regression)')
+plt.legend()
+plt.show()
 
 #exercise 2
 
