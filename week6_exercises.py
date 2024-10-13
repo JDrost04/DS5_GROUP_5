@@ -1,7 +1,63 @@
 import pandas as pd
 import numpy as np
+import matplotlib.pyplot as plt
+import statsmodels.api as sm # py -m pip install statsmodels
+from sklearn.metrics import mean_squared_error
 
 #exercise 1
+np.random.seed(2)
+
+x = np.random.uniform(0, 10, 200)
+y = 2 * x**2 - 5 * x + 3 + np.random.normal(0, 10, 200)
+
+# Plot the dataset
+plt.scatter(x, y)
+plt.xlabel('x')
+plt.ylabel('y')
+plt.title('Dataset')
+plt.show()
+
+# Split into Train/Test
+trainValues = {
+    'x': x[:80],
+    'y': y[:80]
+}
+training_data = pd.DataFrame(trainValues)
+
+testValues = {
+    'x': x[80:],
+    'y': y[80:]
+}
+test_data = pd.DataFrame(testValues)
+
+# Fit the regression model
+train_x = training_data['x']
+train_x_sq = pd.DataFrame(training_data['x']**2)
+
+# Create polynomial features
+train_x_poly = pd.concat([train_x, train_x_sq], axis = 1)
+
+# Fit the OLS model
+X = sm.add_constant(train_x_poly)
+model = sm.OLS(training_data['y'], X)
+results = model.fit()
+
+# Obtain the predicted values
+predicted_training_y = results.predict(X)
+ 
+# Plot the training set and regression line
+plt.scatter(training_data['x'], training_data['y'])
+plt.scatter(training_data['x'], predicted_training_y, color='red')
+plt.xlabel('x')
+plt.ylabel('y')
+plt.title('Polynomial Regression Model (Degree 2)')
+plt.show()
+
+# Evaluate R_squared and MSE
+R_squared = results.rsquared
+MSE = mean_squared_error(training_data['y'], predicted_training_y) 
+print(R_squared, MSE)
+# R_squared = 0.9378508186540011
 
 #exercise 2
 
